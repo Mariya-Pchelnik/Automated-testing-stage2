@@ -1,0 +1,220 @@
+�9n��
+Read program and replace words:
+package MainTask;
+
+import java.io.*;
+
+private class Service {
+    private static int fileSpace = 1;
+    private static int directorySpace = 1;
+
+    private void writeStructureForDirectory(File directory) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("D:\\Java" +
+                "\\JavaIO\\src\\main\\resources\\TextOutPutForMainTask.txt"))) {
+            File[] filesStructure = directory.listFiles();
+
+            writer.write(directory.getName());
+            writer.newLine();
+            writeContent(filesStructure, writer);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private void writeContent(File[] filesStructure, BufferedWriter writer) throws IOException {
+        StringBuffer buffer = new StringBuffer("    " + "    " + "    "
+                + "    " + "    " + "    ");
+
+        for (File currentFile : filesStructure) {
+            if (currentFile.isDirectory()) {
+                File[] currentFileStructure = currentFile.listFiles();
+
+                buffer.setLength(4 * (directorySpace++));
+                writer.write(buffer.toString() + "|--" + currentFile.getName());
+                writer.newLine();
+                fileSpace++;
+                writeContent(currentFileStructure, writer);
+                fileSpace--;
+                directorySpace--;
+            } else {
+                buffer.setLength(4 * (fileSpace));
+                writer.write(buffer.toString() + "|*" + currentFile.getName());
+                writer.newLine();
+            }
+        }
+    }
+
+    private void readFileAndPrintData(File file) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            int symbol;
+            int directoryCounter = 0;
+            int fileCounter = 0;
+            double sumOfFileNameLength = 0;
+
+            while ((symbol = reader.read()) != -1) {
+                if (symbol == '-') {
+                    reader.read();
+                    reader.readLine();
+                    directoryCounter++;
+                } else if (symbol == '*') {
+                    sumOfFileNameLength += reader.readLine().length();
+                    fileCounter++;
+                }
+            }
+            System.out.println("File amount: " + fileCounter);
+            System.out.println("Directory amount: " + directoryCounter);
+            System.out.println("Средняя длина файла: "
+                    + sumOfFileNameLength / fileCounter);
+            System.out.println("Cреднее количество файлов в папке: "
+                    + fileCounter / directoryCounter);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+}
+Read program and reverse symbols:
+;ksaTniaM egakcap
+
+;*.oi.avaj tropmi
+
+{ ecivreS ssalc cilbup
+;1 = ecapSelif tni citats etavirp    
+;1 = ecapSyrotcerid tni citats etavirp    
+
+{ )yrotcerid eliF(yrotceriDroFerutcurtSetirw diov cilbup    
++ "avaJ\\:D"(retirWeliF wen(retirWdereffuB wen = retirw retirWdereffuB( yrt        
+{ )))"txt.ksaTniaMroFtuPtuOtxeT\\secruoser\\niam\\crs\\OIavaJ\\"                
+;)(seliFtsil.yrotcerid = erutcurtSselif ][eliF            
+
+;))(emaNteg.yrotcerid(etirw.retirw            
+;)(eniLwen.retirw            
+;)retirw ,erutcurtSselif(tnetnoCetirw            
+{ )noitpecxe noitpecxEOI( hctac }        
+;)(ecarTkcatStnirp.noitpecxe            
+}        
+}    
+
+{ noitpecxEOI sworht )retirw retirWdereffuB ,erutcurtSselif ][eliF(tnetnoCetirw diov cilbup    
+"    " + "    " + "    "(reffuBgnirtS wen = reffub reffuBgnirtS        
+;)"    " + "    " + "    " +                
+
+{ )erutcurtSselif : eliFtnerruc eliF( rof        
+{ ))(yrotceriDsi.eliFtnerruc( fi            
+;)(seliFtsil.eliFtnerruc = erutcurtSeliFtnerruc ][eliF                
+
+;))++ecapSyrotcerid( * 4(htgneLtes.reffub                
+;))(emaNteg.eliFtnerruc + "--|" + )(gnirtSot.reffub(etirw.retirw                
+;)(eniLwen.retirw                
+;++ecapSelif                
+;)retirw ,erutcurtSeliFtnerruc(tnetnoCetirw                
+;--ecapSelif                
+;--ecapSyrotcerid                
+{ esle }            
+;))ecapSelif( * 4(htgneLtes.reffub                
+;))(emaNteg.eliFtnerruc + "*|" + )(gnirtSot.reffub(etirw.retirw                
+;)(eniLwen.retirw                
+}            
+}        
+}    
+
+{ )elif eliF(ataDtnirPdnAeliFdaer diov cilbup    
+{ )))elif(redaeReliF wen(redaeRdereffuB wen = redaer redaeRdereffuB( yrt        
+;lobmys tni            
+;0 = retnuoCyrotcerid tni            
+;0 = retnuoCelif tni            
+;0 = htgneLemaNeliFfOmus elbuod            
+
+{ )1- =! ))(daer.redaer = lobmys(( elihw            
+{ )'-' == lobmys( fi                
+;)(daer.redaer                    
+;)(eniLdaer.redaer                    
+;++retnuoCyrotcerid                    
+{ )'*' == lobmys( fi esle }                
+;)(htgnel.)(eniLdaer.redaer =+ htgneLemaNeliFfOmus                    
+;++retnuoCelif                    
+}                
+}            
+;)retnuoCelif + " :tnuoma eliF"(nltnirp.tuo.metsyS            
+;)retnuoCyrotcerid + " :tnuoma yrotceriD"(nltnirp.tuo.metsyS            
+" :алйаф анилд яяндерС"(nltnirp.tuo.metsyS            
+;)retnuoCelif / htgneLemaNeliFfOmus +                    
+" :екпап в волйаф овтсечилок еендерC"(nltnirp.tuo.metsyS            
+;)retnuoCyrotcerid / retnuoCelif +                    
+{ )noitpecxe noitpecxEOI( hctac }        
+;)(ecarTkcatStnirp.noitpecxe            
+}        
+}    
+}
+Read program and change letters:
+PACKAGE MAINTASK; 
+ 
+IMPORT JAVA.IO.*; 
+ 
+PUBLIC CLASS SERVICE { 
+    PRIVATE STATIC INT FILESPACE = 1; 
+    PRIVATE STATIC INT DIRECTORYSPACE = 1; 
+ 
+    PUBLIC VOID WRITESTRUCTUREFORDIRECTORY(FILE DIRECTORY) { 
+        TRY (BUFFEREDWRITER WRITER = NEW BUFFEREDWRITER(NEW FILEWRITER("D:\\JAVA" + 
+                "\\JAVAIO\\SRC\\MAIN\\RESOURCES\\TEXTOUTPUTFORMAINTASK.TXT"))) { 
+            FILE[] FILESSTRUCTURE = DIRECTORY.LISTFILES(); 
+ 
+            WRITER.WRITE(DIRECTORY.GETNAME()); 
+            WRITER.NEWLINE(); 
+            WRITECONTENT(FILESSTRUCTURE, WRITER); 
+        } CATCH (IOEXCEPTION EXCEPTION) { 
+            EXCEPTION.PRINTSTACKTRACE(); 
+        } 
+    } 
+ 
+    PUBLIC VOID WRITECONTENT(FILE[] FILESSTRUCTURE, BUFFEREDWRITER WRITER) THROWS IOEXCEPTION { 
+        STRINGBUFFER BUFFER = NEW STRINGBUFFER("    " + "    " + "    " 
+                + "    " + "    " + "    "); 
+ 
+        FOR (FILE CURRENTFILE : FILESSTRUCTURE) { 
+            if (CURRENTFILE.ISDIRECTORY()) { 
+                FILE[] CURRENTFILESTRUCTURE = CURRENTFILE.LISTFILES(); 
+ 
+                BUFFER.SETLENGTH(4 * (DIRECTORYSPACE++)); 
+                WRITER.WRITE(BUFFER.TOSTRING() + "|--" + CURRENTFILE.GETNAME()); 
+                WRITER.NEWLINE(); 
+                FILESPACE++; 
+                WRITECONTENT(CURRENTFILESTRUCTURE, WRITER); 
+                FILESPACE--; 
+                DIRECTORYSPACE--; 
+            } ELSE { 
+                BUFFER.SETLENGTH(4 * (FILESPACE)); 
+                WRITER.WRITE(BUFFER.TOSTRING() + "|*" + CURRENTFILE.GETNAME()); 
+                WRITER.NEWLINE(); 
+            } 
+        } 
+    } 
+ 
+    PUBLIC VOID READFILEANDPRINTDATA(FILE FILE) { 
+        TRY (BUFFEREDREADER READER = NEW BUFFEREDREADER(NEW FILEREADER(FILE))) { 
+            INT SYMBOL; 
+            INT DIRECTORYCOUNTER = 0; 
+            INT FILECOUNTER = 0; 
+            DOUBLE SUMOFFILENAMELENGTH = 0; 
+ 
+            WHILE ((SYMBOL = READER.READ()) != -1) { 
+                if (SYMBOL == '-') { 
+                    READER.READ(); 
+                    READER.READLINE(); 
+                    DIRECTORYCOUNTER++; 
+                } ELSE if (SYMBOL == '*') { 
+                    SUMOFFILENAMELENGTH += READER.READLINE().LENGTH(); 
+                    FILECOUNTER++; 
+                } 
+            } 
+            SYSTEM.OUT.PRINTLN("FILE AMOUNT: " + FILECOUNTER); 
+            SYSTEM.OUT.PRINTLN("DIRECTORY AMOUNT: " + DIRECTORYCOUNTER); 
+            SYSTEM.OUT.PRINTLN("СРЕДНЯЯ ДЛИНА ФАЙЛА: " 
+                    + SUMOFFILENAMELENGTH / FILECOUNTER); 
+            SYSTEM.OUT.PRINTLN("CРЕДНЕЕ КОЛИЧЕСТВО ФАЙЛОВ в ПАПКЕ: " 
+                    + FILECOUNTER / DIRECTORYCOUNTER); 
+        } CATCH (IOEXCEPTION EXCEPTION) { 
+            EXCEPTION.PRINTSTACKTRACE(); 
+        } 
+    } 
+} 

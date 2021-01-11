@@ -1,0 +1,11 @@
+Singer
+    |--Album1
+        |--Album1.1
+            |*Song1.txt
+        |*Song1.txt
+        |*Song2.txt
+    |--Album2
+        |*Song1.txt
+        |*Song2.txt
+    |*Song1.txt
+    |*Song2.txt
