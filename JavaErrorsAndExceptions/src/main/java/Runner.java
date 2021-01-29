@@ -1,24 +1,62 @@
 import exceptions.*;
-import university.ActionsWithUniversity;
-import university.Subjects;
+import university.*;
+
+import java.util.Arrays;
 
 public class Runner {
     public static void main(String[] args) {
         try {
-            ActionsWithUniversity actions = new ActionsWithUniversity();
+            Student student1= new Student("Иванов", Arrays.asList(
+                    new Mark(10,Subjects.CHEMISTRY),
+                    new Mark(9,Subjects.CHEMISTRY),
+                    new Mark(5,Subjects.PHYSICS),
+                    new Mark(5,Subjects.PHYSICS),
+                    new Mark(7,Subjects.PHYSICS)
 
-            System.out.println("\nСредняя оценка студента Петрова: "
-                    + actions.getAverageStudentMark("Петров"));
+            ));
+            Student student2=new Student("Петров",Arrays.asList(
+                    new Mark(10,Subjects.COMPUTER_SINCE),
+                    new Mark(9,Subjects.COMPUTER_SINCE),
+                    new Mark(6,Subjects.INFORMATION_SECURITY),
+                    new Mark(7,Subjects.INFORMATION_SECURITY)
+            ));
+            Student student3=new Student("Андреев",Arrays.asList(
+                    new Mark(9,Subjects.ECONOMICS),
+                    new Mark(9,Subjects.ECONOMICS),
+                    new Mark(8,Subjects.MARKETING),
+                    new Mark(8,Subjects.MARKETING)
+            ));
+            Student student4= new Student("Сидоров", Arrays.asList(
+                    new Mark(7,Subjects.ENGLISH),
+                    new Mark(9,Subjects.ENGLISH),
+                    new Mark(6,Subjects.PHILOSOPHY),
+                    new Mark(5,Subjects.PHILOSOPHY),
+                    new Mark(7,Subjects.ECONOMICS),
+                    new Mark(8,Subjects.ECONOMICS)
+            ));
 
-            System.out.println("Средняя оценка по предмету Экономика в группе 21 на ИЭФ: "
-                    + actions.getAverageSubjectMarkInGroup("Faculty of economics and engineering",
+            Group group1=new Group(11,Arrays.asList(student1));
+            Group group2=new Group(11,Arrays.asList(student2));
+            Group group3= new Group(21, Arrays.asList(student3, student4));
+
+            Faculty faculty1 = new Faculty("Faculty of Computer Systems",
+                    Arrays.asList(group1, group2));
+            Faculty faculty2 = new Faculty("Faculty of economics and engineering",
+                    Arrays.asList(group3));
+
+            University university= new University("BSUIR",Arrays.asList(faculty1, faculty2));
+
+            System.out.println(university);
+            System.out.println("\nAverage mark of the student Ivanov: "
+                    +student1.getAverageMark() );
+            System.out.println("Average grade in Economics in the group 21 at the Faculty of economics and engineering: "
+                    + university.getAverageSubjectMarkInTheGroupAtTheFaculty("Faculty of economics and engineering",
                     21, Subjects.ECONOMICS));
-            System.out.println("Средняя оценка по химии в университете: "
-                    + actions.getAverageSubjectMarkInUniversity(Subjects.CHEMISTRY));
+            System.out.println("Average grade in chemistry at the university: "
+                    + university.getAverageSubjectMarkForTheUniversity(Subjects.CHEMISTRY));
 
-
-        } catch (EmptySubjectsList | IllegalMarkException | EmptyGroupList
-                | EmptyFacultiesList | EmptyStudentsList exception) {
+        } catch (EmptySubjectsListException | IllegalMarkException | EmptyGroupListException
+                | EmptyFacultiesListException | EmptyStudentsListException exception) {
             System.out.println(exception.getMessage());
         }
     }

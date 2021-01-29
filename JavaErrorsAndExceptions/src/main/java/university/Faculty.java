@@ -1,33 +1,35 @@
 package university;
 
-import exceptions.EmptyGroupList;
+import exceptions.EmptyGroupListException;
 
 import java.util.List;
 
 public class Faculty {
     private String name;
-    private List<Group> groupsInTheFaculty;
+    private List<Group> groups;
 
-    public Faculty(String name, List<Group> groupsInTheFaculty)
-            throws EmptyGroupList {
-        if (groupsInTheFaculty.isEmpty()) {
-            throw new EmptyGroupList("На факультете нет ни одной группы");
-        }
+    public Faculty(String name, List<Group> groups)
+            throws EmptyGroupListException {
         this.name = name;
-        this.groupsInTheFaculty = groupsInTheFaculty;
+        if (groups.isEmpty()) {
+            throw new EmptyGroupListException("There are no groups at the faculty"
+                    + name);
+        } else {
+            this.groups = groups;
+        }
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Group> getGroupsInTheFaculty() {
-        return groupsInTheFaculty;
+    public List<Group> getGroups() {
+        return groups;
     }
 
     @Override
     public String toString() {
-        return "\n\nФакультет: " + name
-                + "\nГруппы на факультете: " + groupsInTheFaculty;
+        return "\n\nFaculty: " + name
+                + "\nGroups at the Faculty: " + groups;
     }
 }

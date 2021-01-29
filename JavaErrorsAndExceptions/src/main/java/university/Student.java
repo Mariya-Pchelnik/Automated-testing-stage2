@@ -1,33 +1,29 @@
 package university;
 
-import exceptions.EmptySubjectsList;
-import exceptions.IllegalMarkException;
+import exceptions.EmptySubjectsListException;
 
 import java.util.*;
 
 public class Student {
 
     private String name;
-    private Map<Subjects, List<Integer>> marks;
+    private List<Mark> marks;
 
-    public Student(String name, Map<Subjects, List<Integer>> marks)
-            throws EmptySubjectsList, IllegalMarkException {
-        if (marks.isEmpty()) {
-            throw new EmptySubjectsList("У студента нет ни одного предмета");
-        }
-        for (Subjects subject : marks.keySet()) {
-            for (Integer mark : marks.get(subject)) {
-                if (mark > 10 || mark < 0) {
-                    throw new IllegalMarkException("Оценка не может быть равна "
-                            + mark);
-                }
-            }
-        }
+    public Student(String name, List<Mark> marks)
+            throws EmptySubjectsListException {
         this.name = name;
+        if (marks.isEmpty()) {
+            throw new EmptySubjectsListException("Student "
+                    +name+"has no subjects");
+        }
         this.marks = marks;
     }
 
-    public Map<Subjects, List<Integer>> getMarks() {
+    public void setMarks(List<Mark> marks) {
+        this.marks = marks;
+    }
+
+    public List<Mark> getMarks() {
         return marks;
     }
 
@@ -35,11 +31,20 @@ public class Student {
         return name;
     }
 
+    public double getAverageMark() {
+        int sumOfMarks = 0;
+
+        for (Mark mark : marks) {
+            sumOfMarks += mark.getValue();
+        }
+        return (double)sumOfMarks / marks.size();
+    }
+
     @Override
     public String toString() {
-        return "\nСтудент: "
+        return "\nStudent: "
                 + " " + name
-                + ", оценки: "
+                + ", marks: "
                 + marks;
     }
 }
