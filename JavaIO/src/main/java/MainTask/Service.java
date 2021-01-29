@@ -3,44 +3,51 @@ package MainTask;
 import java.io.*;
 
 public class Service {
-    private static int fileSpace = 1;
-    private static int directorySpace = 1;
+    private StringBuilder stringBuilder = new StringBuilder();
 
-    public void writeStructureForDirectory(File directory) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("D:\\Java" +
-                "\\JavaIO\\src\\main\\resources\\TextOutPutForMainTask.txt"))) {
-            File[] filesStructure = directory.listFiles();
-
-            writer.write(directory.getName());
-            writer.newLine();
-            writeContent(filesStructure, writer);
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-    }
-
-    public void writeContent(File[] filesStructure, BufferedWriter writer) throws IOException {
-        StringBuffer buffer = new StringBuffer("    " + "    " + "    "
-                + "    " + "    " + "    ");
-
-        for (File currentFile : filesStructure) {
-            if (currentFile.isDirectory()) {
-                File[] currentFileStructure = currentFile.listFiles();
-
-                buffer.setLength(4 * (directorySpace++));
-                writer.write(buffer.toString() + "|--" + currentFile.getName());
-                writer.newLine();
-                fileSpace++;
-                writeContent(currentFileStructure, writer);
-                fileSpace--;
-                directorySpace--;
+    public void writeStructureForDirectory(File directory, BufferedWriter writer)
+            throws IOException {
+        for (File file : directory.listFiles()) {
+            if (file.isDirectory()) {
+                writeDirectoryContent(file, writer);
             } else {
-                buffer.setLength(4 * (fileSpace));
-                writer.write(buffer.toString() + "|*" + currentFile.getName());
-                writer.newLine();
+                writeFile(file, writer);
             }
         }
     }
+
+    private void writeDirectoryContent(File directory, BufferedWriter writer) throws IOException {
+        if (directory.listFiles() == null) {
+            writer.write(increaseSpace() + "|--" + directory.getName());
+            writer.newLine();
+            decreaseSpace();
+        } else {
+            writer.write(increaseSpace() + "|--" + directory.getName());
+            writer.newLine();
+            writeStructureForDirectory(directory, writer);
+            decreaseSpace();
+        }
+
+    }
+
+    private void writeFile(File file, BufferedWriter writer) throws IOException {
+        writer.write(increaseSpace() + "|*" + file.getName());
+        writer.newLine();
+        decreaseSpace();
+    }
+
+
+    private StringBuilder increaseSpace() {
+        for (int i = 0; i < 4; i++) {
+            stringBuilder.append(" ");
+        }
+        return stringBuilder;
+    }
+
+    private void decreaseSpace() {
+        stringBuilder.setLength(stringBuilder.length() - 4);
+    }
+
 
     public void readFileAndPrintData(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
@@ -55,15 +62,16 @@ public class Service {
                     reader.readLine();
                     directoryCounter++;
                 } else if (symbol == '*') {
-                    sumOfFileNameLength += reader.readLine().length();
+                    String fileName = reader.readLine().trim();
+                    sumOfFileNameLength += fileName.length();
                     fileCounter++;
                 }
             }
-            System.out.println("File amount: " + fileCounter);
-            System.out.println("Directory amount: " + directoryCounter);
-            System.out.println("Средняя длина файла: "
+            System.out.println("Amount of files: " + fileCounter);
+            System.out.println("Amount of directories: " + directoryCounter);
+            System.out.println("Average length of the file: "
                     + sumOfFileNameLength / fileCounter);
-            System.out.println("Cреднее количество файлов в папке: "
+            System.out.println("Average amount of files in a directory: "
                     + fileCounter / directoryCounter);
         } catch (IOException exception) {
             exception.printStackTrace();
