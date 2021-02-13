@@ -1,6 +1,6 @@
 package university;
 
-import exceptions.EmptyFacultiesListException;
+import exceptions.*;
 
 import java.util.List;
 
@@ -8,15 +8,9 @@ public class University {
     String name;
     List<Faculty> faculties;
 
-    public University(String name, List<Faculty> faculties)
-            throws EmptyFacultiesListException {
+    public University(String name, List<Faculty> faculties) {
         this.name = name;
-        if (faculties.isEmpty()) {
-            throw new EmptyFacultiesListException("There are no faculties" +
-                    " in the university");
-        } else {
-            this.faculties = faculties;
-        }
+        this.faculties = faculties;
     }
 
     public String getName() {
@@ -27,32 +21,53 @@ public class University {
         return faculties;
     }
 
-    public double getAverageSubjectMarkInTheGroupAtTheFaculty(
-            String facultyName, int groupNumber, Subjects subject) {
-        double averageMark = 0;
+    public Faculty getFacultyByName(String facultyName)
+            throws EmptyFacultiesListException, ObjectWasNotFoundException {
+        Faculty faculty = null;
 
-        for (Faculty faculty : faculties) {
-            if (faculty.getName().equals(facultyName)) {
-                for (Group group : faculty.getGroups()) {
-                    if (group.getNumber() == groupNumber) {
-                        averageMark = group.getAverageSubjectMark(subject);
-                    }
-                }
-            }
-
+        if (faculties.isEmpty()) {
+            throw new EmptyFacultiesListException("There are no faculties" +
+                    " in the university");
         }
-        return averageMark;
+        for (Faculty currentFaculty : faculties) {
+            if (currentFaculty.getName().equals(facultyName)) {
+                faculty = currentFaculty;
+            }
+        }
+        if (faculty == null) {
+            throw new ObjectWasNotFoundException("Faculty " + facultyName
+                    + "wasn't found");
+        }
+        return faculty;
     }
 
-    public double getAverageSubjectMarkForTheUniversity(Subjects subject) {
+    public double getAverageSubjectMarkForTheUniversity(Subjects subject)
+            throws EmptyFacultiesListException, EmptyGroupListException,
+            EmptyStudentsListException, EmptySubjectsListException {
         int sumOfMarks = 0;
         int numberOfMarks = 0;
 
+        if (faculties.isEmpty()) {
+            throw new EmptyFacultiesListException("There are no faculties" +
+                    " in the university");
+        }
         for (Faculty faculty : faculties) {
+            if (faculty.getGroups().isEmpty()) {
+                throw new EmptyGroupListException("There are no groups at the faculty"
+                        + faculty.getName());
+            }
             for (Group group : faculty.getGroups()) {
+                if (group.getStudents().isEmpty()) {
+                    throw new EmptyStudentsListException("There are no " +
+                            "students in the group " + group.getNumber());
+                }
                 for (Student student : group.getStudents()) {
+                    if (student.getMarks().isEmpty()) {
+                        throw new EmptySubjectsListException("Student "
+                                + student.getName() + "has no subjects");
+                    }
                     for (Mark mark : student.getMarks()) {
-                        if (mark.getSubject() == subject) {
+                        if (mark.getSubject().equals(subject)) {
                             sumOfMarks += mark.getValue();
                             numberOfMarks++;
                         }

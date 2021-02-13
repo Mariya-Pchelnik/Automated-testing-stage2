@@ -1,6 +1,6 @@
 package exceptions;
 
-public class EmptySubjectsListException extends Exception{
+public class EmptySubjectsListException extends Exception {
     public EmptySubjectsListException() {
     }
 

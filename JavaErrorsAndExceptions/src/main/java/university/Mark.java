@@ -12,8 +12,8 @@ public class Mark {
     }
 
     public void setValue(int value) throws IllegalMarkException {
-        if (value>10||value<0){
-            throw new IllegalMarkException("Mark value cann't be"+value);
+        if (value > 10 || value < 0) {
+            throw new IllegalMarkException("Mark value cann't be" + value);
         }
         this.value = value;
     }

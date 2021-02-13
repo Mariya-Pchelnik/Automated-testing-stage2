@@ -1,6 +1,6 @@
 package exceptions;
 
-public class EmptyGroupListException extends Exception{
+public class EmptyGroupListException extends Exception {
     public EmptyGroupListException() {
     }
 

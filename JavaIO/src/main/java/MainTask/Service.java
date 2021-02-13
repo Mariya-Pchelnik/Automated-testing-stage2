@@ -9,33 +9,18 @@ public class Service {
             throws IOException {
         for (File file : directory.listFiles()) {
             if (file.isDirectory()) {
-                writeDirectoryContent(file, writer);
+                writer.write(increaseSpace() + "|--" + file.getName());
+                writer.newLine();
+                if (file != null) {
+                    writeStructureForDirectory(file, writer);
+                }
             } else {
-                writeFile(file, writer);
+                writer.write(increaseSpace() + "|*" + file.getName());
+                writer.newLine();
             }
-        }
-    }
-
-    private void writeDirectoryContent(File directory, BufferedWriter writer) throws IOException {
-        if (directory.listFiles() == null) {
-            writer.write(increaseSpace() + "|--" + directory.getName());
-            writer.newLine();
-            decreaseSpace();
-        } else {
-            writer.write(increaseSpace() + "|--" + directory.getName());
-            writer.newLine();
-            writeStructureForDirectory(directory, writer);
             decreaseSpace();
         }
-
     }
-
-    private void writeFile(File file, BufferedWriter writer) throws IOException {
-        writer.write(increaseSpace() + "|*" + file.getName());
-        writer.newLine();
-        decreaseSpace();
-    }
-
 
     private StringBuilder increaseSpace() {
         for (int i = 0; i < 4; i++) {
@@ -51,22 +36,20 @@ public class Service {
 
     public void readFileAndPrintData(File file) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            int symbol;
+            String string;
             int directoryCounter = 0;
             int fileCounter = 0;
             double sumOfFileNameLength = 0;
 
-            while ((symbol = reader.read()) != -1) {
-                if (symbol == '-') {
-                    reader.read();
-                    reader.readLine();
+            while ((string = reader.readLine()) != null) {
+                if (string.contains("|--")) {
                     directoryCounter++;
-                } else if (symbol == '*') {
-                    String fileName = reader.readLine().trim();
-                    sumOfFileNameLength += fileName.length();
+                } else if (string.contains("|*")) {
+                    sumOfFileNameLength += string.trim().substring(2).length();
                     fileCounter++;
                 }
             }
+
             System.out.println("Amount of files: " + fileCounter);
             System.out.println("Amount of directories: " + directoryCounter);
             System.out.println("Average length of the file: "

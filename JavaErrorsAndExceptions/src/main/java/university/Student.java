@@ -1,26 +1,22 @@
 package university;
 
 import exceptions.EmptySubjectsListException;
+import exceptions.IllegalMarkException;
 
 import java.util.*;
 
 public class Student {
-
     private String name;
     private List<Mark> marks;
 
-    public Student(String name, List<Mark> marks)
-            throws EmptySubjectsListException {
+    public Student(String name, List<Mark> marks) {
         this.name = name;
-        if (marks.isEmpty()) {
-            throw new EmptySubjectsListException("Student "
-                    +name+"has no subjects");
-        }
         this.marks = marks;
     }
 
-    public void setMarks(List<Mark> marks) {
-        this.marks = marks;
+    public void addMark(Mark mark)
+            throws IllegalMarkException {
+        marks.add(mark);
     }
 
     public List<Mark> getMarks() {
@@ -31,13 +27,18 @@ public class Student {
         return name;
     }
 
-    public double getAverageMark() {
+    public double getAverageMark()
+            throws EmptySubjectsListException {
         int sumOfMarks = 0;
 
+        if (marks.isEmpty()) {
+            throw new EmptySubjectsListException("Student "
+                    + name + "has no subjects");
+        }
         for (Mark mark : marks) {
             sumOfMarks += mark.getValue();
         }
-        return (double)sumOfMarks / marks.size();
+        return (double) sumOfMarks / marks.size();
     }
 
     @Override
