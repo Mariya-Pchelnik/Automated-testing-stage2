@@ -29,6 +29,7 @@ public class Faculty {
         for (Group currentGroup : groups) {
             if (currentGroup.getNumber() == number) {
                 group = currentGroup;
+                break;
             }
         }
         if (group == null) {

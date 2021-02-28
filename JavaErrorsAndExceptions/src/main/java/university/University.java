@@ -32,6 +32,7 @@ public class University {
         for (Faculty currentFaculty : faculties) {
             if (currentFaculty.getName().equals(facultyName)) {
                 faculty = currentFaculty;
+                break;
             }
         }
         if (faculty == null) {
