@@ -17,18 +17,18 @@ public class NewPastePage extends AbstractPage {
         super(driver);
     }
 
-    public String getHeading(){
-        return Waits.waitForVisibilityOfTheWebElement(driver, heading)
-                .getText();
+    public String getHeading() {
+        Waits.waitForVisibilityOfTheWebElement(driver, heading);
+        return heading.getText();
     }
 
-    public String getSyntaxHighlighting(){
-        return Waits.waitForVisibilityOfTheWebElement(driver, syntaxHighlighting)
-                .getText();
+    public String getSyntaxHighlighting() {
+        Waits.waitForVisibilityOfTheWebElement(driver, syntaxHighlighting);
+        return syntaxHighlighting.getText();
     }
 
-    public String getCode(){
-        return Waits.waitForVisibilityOfTheWebElement(driver, code)
-                .getText();
+    public String getCode() {
+        Waits.waitForVisibilityOfTheWebElement(driver, code);
+        return code.getText();
     }
 }

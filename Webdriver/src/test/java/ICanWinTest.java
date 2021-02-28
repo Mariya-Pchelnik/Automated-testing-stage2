@@ -19,8 +19,8 @@ public class ICanWinTest {
         pasteBinMainPage = new PasteBinMainPage(driver);
         pasteBinMainPage.openPage()
                 .writeCode("Hello from WebDriver")
-                .choseExpiration()
-                .choseSyntaxHighlighting()
+                .choseExpiration("10 Minutes")
+                .choseSyntaxHighlighting("Bash")
                 .writeName(" helloweb");
     }
 

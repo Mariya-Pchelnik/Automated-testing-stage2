@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class BringItOnTest {
     private WebDriver driver;
@@ -18,25 +19,22 @@ public class BringItOnTest {
     @BeforeTest
     public void driverSetUp() {
         driver = new ChromeDriver();
-        newPastePage=fillInForm().createNewPaste();
     }
 
     @Test
-    public void inputTitleTest() {
-        String currentTitle = newPastePage.getHeading();
-        Assert.assertEquals(currentTitle,expectedName );
-    }
-
-    @Test
-    public void chooseSyntaxHighlightingTest() {
-        String currentHighLighting = newPastePage.getSyntaxHighlighting();
-        Assert.assertEquals("Bash", currentHighLighting);
-    }
-
-    @Test
-    public void pasteCodeTest() {
-        String currentCode = newPastePage.getCode();
-        Assert.assertEquals(expectedCode, currentCode);
+    public void pasteDataTest() {
+        newPastePage=new PasteBinMainPage(driver)
+                .openPage()
+                .writeCode(expectedCode)
+                .choseSyntaxHighlighting("Bash")
+                .choseExpiration("10 Minutes")
+                .writeName(expectedName)
+                .createNewPaste();
+        SoftAssert softAssert=new SoftAssert();
+        softAssert.assertEquals(expectedName,newPastePage.getHeading());
+        softAssert.assertEquals("Bash",newPastePage.getSyntaxHighlighting());
+        softAssert.assertEquals(expectedCode,newPastePage.getCode());
+        softAssert.assertAll();
     }
 
      @AfterTest
@@ -44,15 +42,5 @@ public class BringItOnTest {
         driver.quit();
         driver = null;
     }
-
-    private PasteBinMainPage fillInForm() {
-        return new PasteBinMainPage(driver)
-                .openPage()
-                .writeCode(expectedCode)
-                .choseSyntaxHighlighting()
-                .choseExpiration()
-                .writeName(expectedName);
-    }
-
 }
 

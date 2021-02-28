@@ -1,5 +1,6 @@
 package bringItOnAndICanWinPages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,12 +12,8 @@ public class PasteBinMainPage extends AbstractPage {
     private WebElement newPaste;
     @FindBy(id = "select2-postform-format-container")
     WebElement syntaxHighlighting;
-    @FindBy(xpath = "//li[@role='option' and text()='Bash']")
-    WebElement syntaxHighlightingBash;
     @FindBy(xpath = "//span[@id='select2-postform-expiration-container']")
     private WebElement pasteExpiration;
-    @FindBy(xpath = "//li[@role='option' and text()='10 Minutes']")
-    private WebElement pasteExpiration10Minutes;
     @FindBy(id = "postform-name")
     private WebElement pasteName;
     @FindBy(xpath = "//*[@type='submit']")
@@ -32,36 +29,42 @@ public class PasteBinMainPage extends AbstractPage {
     }
 
     public PasteBinMainPage writeCode(String code) {
-        Waits.waitForVisibilityOfTheWebElement(driver, newPaste)
-                .sendKeys(code);
+        Waits.waitForVisibilityOfTheWebElement(driver, newPaste);
+        newPaste.sendKeys(code);
         return this;
     }
 
-    public PasteBinMainPage choseSyntaxHighlighting() {
-        Waits.waitForWebElementToBeClickable(driver, syntaxHighlighting)
-                .click();
-        Waits.waitForWebElementToBeClickable(driver, syntaxHighlightingBash)
+    public PasteBinMainPage choseSyntaxHighlighting(String highlightingType) {
+        By xpath = By.xpath("//li[@role='option' and text()='"
+                + highlightingType + "']");
+
+        Waits.waitForWebElementToBeClickable(driver, syntaxHighlighting);
+        syntaxHighlighting.click();
+        Waits.waitForWebElementToBeClickable(driver, xpath)
                 .click();
         return this;
     }
 
-    public PasteBinMainPage choseExpiration() {
-        Waits.waitForWebElementToBeClickable(driver, pasteExpiration)
+    public PasteBinMainPage choseExpiration(String expirationType) {
+        By xpath = By.xpath("//li[@role='option' and text()='"
+                + expirationType + "']");
+
+        Waits.waitForWebElementToBeClickable(driver, pasteExpiration);
+        pasteExpiration.click();
+        Waits.waitForWebElementToBeClickable(driver, xpath)
                 .click();
-        Waits.waitForWebElementToBeClickable(driver, pasteExpiration10Minutes).
-                click();
         return this;
     }
 
     public PasteBinMainPage writeName(String name) {
-        Waits.waitForVisibilityOfTheWebElement(driver, pasteName)
-                .sendKeys(name);
+        Waits.waitForVisibilityOfTheWebElement(driver, pasteName);
+        pasteName.sendKeys(name);
         return this;
     }
 
     public NewPastePage createNewPaste() {
-        Waits.waitForWebElementToBeClickable(driver, createNewPasteButton)
-                .click();
+        Waits.waitForWebElementToBeClickable(driver, createNewPasteButton);
+        createNewPasteButton.click();
         return new NewPastePage(driver);
     }
 }

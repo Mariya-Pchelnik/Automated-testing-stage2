@@ -30,39 +30,41 @@ public class EstimatePage extends AbstractPage {
         driver.switchTo().frame("myFrame");
         return this;
     }
+
     public String getVmClass() {
-        return Waits.waitForVisibilityOfTheWebElement(driver, vmClass)
-                .getText();
+        Waits.waitForVisibilityOfTheWebElement(driver, vmClass);
+        return vmClass.getText();
     }
 
     public String getInstanceType() {
-        return Waits.waitForVisibilityOfTheWebElement(driver, instanceType)
-                .getText();
+        Waits.waitForVisibilityOfTheWebElement(driver, instanceType);
+        return instanceType.getText();
     }
 
     public String getRegion() {
-        return Waits.waitForVisibilityOfTheWebElement(driver, region)
-                .getText();
+        Waits.waitForVisibilityOfTheWebElement(driver, region);
+        return region.getText();
     }
 
     public String getLocalSSD() {
-        return Waits.waitForVisibilityOfTheWebElement(driver, localSSD)
-                .getText();
+        Waits.waitForVisibilityOfTheWebElement(driver, localSSD);
+        return localSSD.getText();
     }
 
     public String getCommitmentTerm() {
-        return Waits.waitForVisibilityOfTheWebElement(driver, commitmentTerm)
-                .getText();
+        Waits.waitForVisibilityOfTheWebElement(driver, commitmentTerm);
+        return commitmentTerm.getText();
     }
 
     public String getTotalCost() {
-        return Waits.waitForVisibilityOfTheWebElement(driver, totalCost)
-                .getText() .replace("per 1 month","")
-                .replaceAll("[^0-9.]","");
+        Waits.waitForVisibilityOfTheWebElement(driver, totalCost);
+        return totalCost.getText().replace("per 1 month", "")
+                .replaceAll("[^0-9.]", "");
     }
 
     public EmailEstimateFormPage sendEstimateByEmail() {
-        Waits.waitForWebElementToBeClickable(driver, emailEstimate).click();
+        Waits.waitForWebElementToBeClickable(driver, emailEstimate);
+        emailEstimate.click();
         return new EmailEstimateFormPage(driver);
     }
 }

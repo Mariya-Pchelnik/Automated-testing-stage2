@@ -11,20 +11,19 @@ public class EmailEstimateFormPage extends AbstractPage {
     @FindBy(xpath = "//button[@aria-label=\"Send Email\"]")
     private WebElement buttonSendEmail;
 
-
     public EmailEstimateFormPage(WebDriver driver) {
         super(driver);
     }
 
     public EmailEstimateFormPage inputEmail() {
-        Waits.waitForVisibilityOfTheWebElement(driver, inputEmail)
-                .sendKeys(MailPage.mailAddress);
+        Waits.waitForVisibilityOfTheWebElement(driver, inputEmail);
+        inputEmail.sendKeys(MailPage.mailAddress);
         return this;
     }
 
     public MailPage sendEmail() {
-        Waits.waitForWebElementToBeClickable(driver, buttonSendEmail)
-                .click();
+        Waits.waitForWebElementToBeClickable(driver, buttonSendEmail);
+        buttonSendEmail.click();
         return new MailPage(driver);
     }
 }

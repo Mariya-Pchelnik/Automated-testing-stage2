@@ -3,7 +3,11 @@ package hurtMePlentyAndHardcore;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import waits.Waits;
+
+import java.time.Duration;
 
 public class MailPage extends AbstractPage {
     private static final String HOMEPAGE_URL = "https://10minutemail.com/";
@@ -24,18 +28,19 @@ public class MailPage extends AbstractPage {
         return this;
     }
 
-    public String getMailAddress() {
-        do {
-            mailAddress = Waits.waitForVisibilityOfTheWebElement(driver, fieldMailAddress)
-                    .getAttribute("value");
-        } while (!(mailAddress.contains("@")));
-        return mailAddress;
+    public MailPage setMailAddress() {
+        Waits.waitForVisibilityOfTheWebElement(driver, fieldMailAddress);
+        new WebDriverWait(driver, Duration.ofSeconds(20))
+                .until(ExpectedConditions
+                        .attributeContains(fieldMailAddress, "value", "@"));
+        mailAddress = fieldMailAddress.getAttribute("value");
+        return this;
     }
 
     public String getTotalCostFromMail() {
-        Waits.waitForWebElementToBeClickable(driver, mailLetter)
-                .click();
-        return Waits.waitForVisibilityOfTheWebElement(driver, totalCost)
-                .getText().replaceAll("[^0-9.]", "");
+        Waits.waitForWebElementToBeClickable(driver, mailLetter);
+        mailLetter.click();
+        Waits.waitForVisibilityOfTheWebElement(driver, totalCost);
+        return totalCost.getText().replaceAll("[^0-9.]", "");
     }
 }
