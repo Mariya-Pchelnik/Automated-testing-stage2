@@ -30,7 +30,11 @@ public class Group {
         return number;
     }
 
-    public List<Student> getStudents() {
+    public List<Student> getStudents() throws EmptyStudentsListException {
+        if (students.isEmpty()) {
+            throw new EmptyStudentsListException("There are no " +
+                    "students in the group " + number);
+        }
         return students;
     }
 
@@ -39,15 +43,7 @@ public class Group {
         int sumOfMarks = 0;
         int numberOfMarks = 0;
 
-        if (students.isEmpty()) {
-            throw new EmptyStudentsListException("There are no " +
-                    "students in the group " + number);
-        }
-        for (Student student : students) {
-            if (student.getMarks().isEmpty()) {
-                throw new EmptySubjectsListException("Student "
-                        + student.getName() + "has no subjects");
-            }
+        for (Student student : getStudents()) {
             for (Mark mark : student.getMarks()) {
                 if (mark.getSubject().equals(subject)) {
                     sumOfMarks += mark.getValue();

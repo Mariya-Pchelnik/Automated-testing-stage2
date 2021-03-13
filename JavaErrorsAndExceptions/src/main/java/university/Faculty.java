@@ -22,11 +22,7 @@ public class Faculty {
             throws EmptyGroupListException, ObjectWasNotFoundException {
         Group group = null;
 
-        if (groups.isEmpty()) {
-            throw new EmptyGroupListException("There are no groups at the faculty"
-                    + name);
-        }
-        for (Group currentGroup : groups) {
+        for (Group currentGroup : getGroups()) {
             if (currentGroup.getNumber() == number) {
                 group = currentGroup;
                 break;
@@ -43,7 +39,11 @@ public class Faculty {
         return name;
     }
 
-    public List<Group> getGroups() {
+    public List<Group> getGroups() throws EmptyGroupListException {
+        if (groups.isEmpty()) {
+            throw new EmptyGroupListException("There are no groups at the faculty"
+                    + name);
+        }
         return groups;
     }
 

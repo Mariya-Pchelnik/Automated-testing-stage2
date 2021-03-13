@@ -12,7 +12,6 @@ public class Runner {
                     new Mark(5, Subjects.PHYSICS),
                     new Mark(5, Subjects.PHYSICS),
                     new Mark(7, Subjects.PHYSICS)
-
             ));
             Student student2 = new Student("Петров", Arrays.asList(
                     new Mark(10, Subjects.COMPUTER_SINCE),

@@ -19,7 +19,12 @@ public class Student {
         marks.add(mark);
     }
 
-    public List<Mark> getMarks() {
+    public List<Mark> getMarks()
+            throws EmptySubjectsListException {
+        if (marks.isEmpty()) {
+            throw new EmptySubjectsListException("Student "
+                    + name + "has no subjects");
+        }
         return marks;
     }
 
@@ -31,11 +36,7 @@ public class Student {
             throws EmptySubjectsListException {
         int sumOfMarks = 0;
 
-        if (marks.isEmpty()) {
-            throw new EmptySubjectsListException("Student "
-                    + name + "has no subjects");
-        }
-        for (Mark mark : marks) {
+        for (Mark mark : getMarks()) {
             sumOfMarks += mark.getValue();
         }
         return (double) sumOfMarks / marks.size();

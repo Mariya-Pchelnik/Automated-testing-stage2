@@ -17,7 +17,11 @@ public class University {
         return name;
     }
 
-    public List<Faculty> getFaculties() {
+    public List<Faculty> getFaculties() throws EmptyFacultiesListException {
+        if (faculties.isEmpty()) {
+            throw new EmptyFacultiesListException("There are no faculties" +
+                    " in the university");
+        }
         return faculties;
     }
 
@@ -25,11 +29,7 @@ public class University {
             throws EmptyFacultiesListException, ObjectWasNotFoundException {
         Faculty faculty = null;
 
-        if (faculties.isEmpty()) {
-            throw new EmptyFacultiesListException("There are no faculties" +
-                    " in the university");
-        }
-        for (Faculty currentFaculty : faculties) {
+        for (Faculty currentFaculty : getFaculties()) {
             if (currentFaculty.getName().equals(facultyName)) {
                 faculty = currentFaculty;
                 break;
@@ -48,25 +48,9 @@ public class University {
         int sumOfMarks = 0;
         int numberOfMarks = 0;
 
-        if (faculties.isEmpty()) {
-            throw new EmptyFacultiesListException("There are no faculties" +
-                    " in the university");
-        }
-        for (Faculty faculty : faculties) {
-            if (faculty.getGroups().isEmpty()) {
-                throw new EmptyGroupListException("There are no groups at the faculty"
-                        + faculty.getName());
-            }
+        for (Faculty faculty : getFaculties()) {
             for (Group group : faculty.getGroups()) {
-                if (group.getStudents().isEmpty()) {
-                    throw new EmptyStudentsListException("There are no " +
-                            "students in the group " + group.getNumber());
-                }
                 for (Student student : group.getStudents()) {
-                    if (student.getMarks().isEmpty()) {
-                        throw new EmptySubjectsListException("Student "
-                                + student.getName() + "has no subjects");
-                    }
                     for (Mark mark : student.getMarks()) {
                         if (mark.getSubject().equals(subject)) {
                             sumOfMarks += mark.getValue();
